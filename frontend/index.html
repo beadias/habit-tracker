@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Gestão de Hábitos</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1>Sistema de Gestão de Hábitos</h1>
+      <p>Cadastre e acompanhe seus hábitos.</p>
+
+      <form id="formHabito">
+        <input type="text" id="nome" placeholder="Nome do hábito" required />
+
+        <select id="frequencia" required>
+          <option value="">Selecione a frequência</option>
+          <option value="Diário">Diário</option>
+          <option value="Semanal">Semanal</option>
+          <option value="Mensal">Mensal</option>
+        </select>
+
+        <button type="submit">Cadastrar hábito</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Hábitos cadastrados</h2>
+      <div id="listaHabitos" class="lista"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
