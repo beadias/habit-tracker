@@ -58,6 +58,23 @@ app.get('/habitos', async (req, res) => {
     }
 });
 
+app.put('/habitos/:id', async (req, res) => {
+    const { id } = req.params;
+    const { nome, frequencia } = req.body;
+
+    try {
+        const result = await pool.query(
+            'UPDATE habitos SET nome = $1, frequencia = $2 WHERE id = $3 RETURNING *',
+            [nome, frequencia, id]
+        );
+
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erro ao atualizar hábito');
+    }
+});
+
 const PORT = 3000;
 
 app.listen(PORT, () => {

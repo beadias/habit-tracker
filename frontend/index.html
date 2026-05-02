@@ -32,6 +32,21 @@
     </section>
   </main>
 
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Editar hábito</h3>
+  
+      <input type="text" id="editNome" placeholder="Nome do hábito" />
+      <input type="text" id="editFrequencia" placeholder="Frequência" />
+  
+      <div class="modal-buttons">
+        <button onclick="salvarEdicao()">Salvar</button>
+        <button onclick="fecharModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
+
 </body>
 </html>
