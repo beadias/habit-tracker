@@ -2,16 +2,43 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sistema de Gestão de Hábitos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Hábitos</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <main class="container">
-    <section class="card">
-      <h1>Sistema de Gestão de Hábitos</h1>
-      <p>Cadastre e acompanhe seus hábitos.</p>
 
+<body>
+
+  <!-- TELA INICIAL -->
+  <div id="telaInicial" class="container">
+    <div class="card">
+        <h1>Bem-vindo ao seu sistema de gestão de hábitos!👋</h1>
+        <p>Informe seus dados para começar a registrar sua rotina.</p>
+
+      <input type="text" id="nomeUsuario" placeholder="Digite seu nome" />
+      <input type="number" id="idadeUsuario" placeholder="Digite sua idade" />
+
+      <button onclick="iniciarSistema()">Iniciar</button>
+    </div>
+  </div>
+
+  <!--SISTEMA -->
+  <div id="sistema" class="container hidden">
+
+    <!--TOPO -->
+    <div class="card topo">
+      <div>
+        <h2 id="boasVindas"></h2>
+      </div>
+
+      <div class="info-direita">
+        <span id="idade"></span><br>
+        <span id="dataHoje"></span>
+      </div>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <div class="card">
       <form id="formHabito">
         <input type="text" id="nome" placeholder="Nome do hábito" required />
 
@@ -19,26 +46,31 @@
           <option value="">Selecione a frequência</option>
           <option value="Diário">Diário</option>
           <option value="Semanal">Semanal</option>
-          <option value="Mensal">Mensal</option>
         </select>
 
         <button type="submit">Cadastrar hábito</button>
       </form>
-    </section>
+    </div>
 
-    <section class="card">
+    <!--LISTA -->
+    <div class="card">
       <h2>Hábitos cadastrados</h2>
-      <div id="listaHabitos" class="lista"></div>
-    </section>
-  </main>
+      <div id="listaHabitos"></div>
+    </div>
 
+  </div>
+
+  <!-- MODAL DE EDIÇÃO -->
   <div id="modal" class="modal hidden">
     <div class="modal-content">
       <h3>Editar hábito</h3>
-  
-      <input type="text" id="editNome" placeholder="Nome do hábito" />
-      <input type="text" id="editFrequencia" placeholder="Frequência" />
-  
+
+      <input type="text" id="editNome" placeholder="Nome do hábito"/>
+      <select id="editFrequencia">
+        <option value="Diário">Diário</option>
+        <option value="Semanal">Semanal</option>
+      </select>
+
       <div class="modal-buttons">
         <button onclick="salvarEdicao()">Salvar</button>
         <button onclick="fecharModal()">Cancelar</button>
