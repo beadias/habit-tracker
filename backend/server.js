@@ -75,6 +75,34 @@ app.put('/habitos/:id', async (req, res) => {
     }
 });
 
+app.delete('/habitos/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await pool.query('DELETE FROM habitos WHERE id = $1', [id]);
+        res.send('Hábito excluído com sucesso');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erro ao excluir hábito');
+    }
+});
+
+app.patch('/habitos/:id/concluir', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await pool.query(
+            'UPDATE habitos SET concluido = true WHERE id = $1 RETURNING *',
+            [id]
+        );
+
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erro ao concluir hábito');
+    }
+});
+
 const PORT = 3000;
 
 app.listen(PORT, () => {

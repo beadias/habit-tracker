@@ -240,4 +240,23 @@
     .acoes button {
       flex: 1;
     }
+    
+  }
+  .btn-concluir {
+    background: #34d399;
+  }
+  
+  .btn-concluir:hover {
+    background: #10b981;
+  }
+  
+  .concluido {
+    text-decoration: line-through;
+    color: #6b7280 !important;
+  }
+  
+  .status-concluido {
+    margin-top: 6px;
+    color: #10b981;
+    font-weight: bold;
   }

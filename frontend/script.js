@@ -47,21 +47,28 @@ async function listarHabitos() {
     item.classList.add('habito');
 
     item.innerHTML = `
-      <div>
-        <strong>${habito.nome}</strong>
-        <span>Frequência: ${habito.frequencia}</span>
-      </div>
+  <div>
+    <strong class="${habito.concluido ? 'concluido' : ''}">
+      ${habito.nome}
+    </strong>
+    <span>Frequência: ${habito.frequencia}</span>
+    ${habito.concluido ? '<p class="status-concluido">Concluído</p>' : ''}
+  </div>
 
-      <div class="acoes">
-        <button class="btn-editar" onclick="abrirModal(${habito.id}, '${habito.nome}', '${habito.frequencia}')">
-          Editar
-        </button>
+  <div class="acoes">
+    <button class="btn-concluir" onclick="concluirHabito(${habito.id})">
+      Concluir
+    </button>
 
-        <button class="btn-excluir" onclick="excluirHabito(${habito.id})">
-          Excluir
-        </button>
-      </div>
-    `;
+    <button class="btn-editar" onclick="abrirModal(${habito.id}, '${habito.nome}', '${habito.frequencia}')">
+      Editar
+    </button>
+
+    <button class="btn-excluir" onclick="excluirHabito(${habito.id})">
+      Excluir
+    </button>
+  </div>
+`;
 
     listaHabitos.appendChild(item);
   });
@@ -147,3 +154,12 @@ async function excluirHabito(id) {
 
   listarHabitos();
 }
+
+// Marcar hábito como concluido
+async function concluirHabito(id) {
+    await fetch(`${API_URL}/${id}/concluir`, {
+      method: 'PATCH'
+    });
+  
+    listarHabitos();
+  }
