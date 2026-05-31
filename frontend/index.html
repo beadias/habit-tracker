@@ -12,8 +12,8 @@
   <!-- TELA INICIAL -->
   <div id="telaInicial" class="container">
     <div class="card">
-        <h1>Bem-vindo ao seu sistema de gestão de hábitos!👋</h1>
-        <p>Informe seus dados para começar a registrar sua rotina.</p>
+      <h1>Bem-vindo ao seu sistema de gestão de hábitos! 👋</h1>
+      <p>Informe seus dados para começar a registrar sua rotina.</p>
 
       <input type="text" id="nomeUsuario" placeholder="Digite seu nome" />
       <input type="number" id="idadeUsuario" placeholder="Digite sua idade" />
@@ -22,10 +22,10 @@
     </div>
   </div>
 
-  <!--SISTEMA -->
+  <!-- SISTEMA -->
   <div id="sistema" class="container hidden">
 
-    <!--TOPO -->
+    <!-- TOPO -->
     <div class="card topo">
       <div>
         <h2 id="boasVindas"></h2>
@@ -37,25 +37,81 @@
       </div>
     </div>
 
-    <!-- FORMULÁRIO -->
-    <div class="card">
-      <form id="formHabito">
-        <input type="text" id="nome" placeholder="Nome do hábito" required />
+    <!-- ABAS -->
+    <div class="abas">
+      <button class="aba ativa" onclick="mostrarAba('registro')">
+        Registro de hábitos
+      </button>
 
-        <select id="frequencia" required>
-          <option value="">Selecione a frequência</option>
-          <option value="Diário">Diário</option>
-          <option value="Semanal">Semanal</option>
-        </select>
-
-        <button type="submit">Cadastrar hábito</button>
-      </form>
+      <button class="aba" onclick="mostrarAba('historico')">
+        Histórico de registros
+      </button>
     </div>
 
-    <!--LISTA -->
-    <div class="card">
-      <h2>Hábitos cadastrados</h2>
-      <div id="listaHabitos"></div>
+    <!-- ABA REGISTRO -->
+    <div id="abaRegistro">
+
+      <!-- FORMULÁRIO -->
+      <div class="card">
+        <form id="formHabito">
+          <input type="text" id="nome" placeholder="Nome do hábito" required />
+
+          <select id="frequencia" required>
+            <option value="">Selecione a frequência</option>
+            <option value="Diário">Diário</option>
+            <option value="Semanal">Semanal</option>
+          </select>
+
+          <div id="opcoesDiario" class="opcoes-frequencia hidden">
+            <label>Quantas vezes por dia?</label>
+
+            <select id="metaDiaria">
+              <option value="">Selecione</option>
+              <option value="1">1 vez por dia</option>
+              <option value="2">2 vezes por dia</option>
+              <option value="3">3 vezes por dia</option>
+              <option value="4">4 vezes por dia</option>
+              <option value="5">5 vezes por dia</option>
+              <option value="6">6 vezes por dia</option>
+              <option value="7">7 vezes por dia</option>
+              <option value="8">8 vezes por dia</option>
+              <option value="9">9 vezes por dia</option>
+              <option value="10">10 vezes por dia</option>
+            </select>
+          </div>
+
+          <div id="opcoesSemanal" class="opcoes-frequencia hidden">
+            <label>Dias da semana:</label>
+
+            <div class="dias-checkbox">
+              <label><input type="checkbox" value="Seg"> Seg</label>
+              <label><input type="checkbox" value="Ter"> Ter</label>
+              <label><input type="checkbox" value="Qua"> Qua</label>
+              <label><input type="checkbox" value="Qui"> Qui</label>
+              <label><input type="checkbox" value="Sex"> Sex</label>
+              <label><input type="checkbox" value="Sab"> Sab</label>
+              <label><input type="checkbox" value="Dom"> Dom</label>
+            </div>
+          </div>
+
+          <button type="submit">Cadastrar hábito</button>
+        </form>
+      </div>
+
+      <!-- LISTA -->
+      <div class="card">
+        <h2>Hábitos cadastrados</h2>
+        <div id="listaHabitos"></div>
+      </div>
+
+    </div>
+
+    <!-- ABA HISTÓRICO -->
+    <div id="abaHistorico" class="hidden">
+      <div class="card">
+        <h2>Histórico de registros</h2>
+        <div id="listaHistorico"></div>
+      </div>
     </div>
 
   </div>
@@ -66,6 +122,7 @@
       <h3>Editar hábito</h3>
 
       <input type="text" id="editNome" placeholder="Nome do hábito"/>
+
       <select id="editFrequencia">
         <option value="Diário">Diário</option>
         <option value="Semanal">Semanal</option>
@@ -74,6 +131,19 @@
       <div class="modal-buttons">
         <button onclick="salvarEdicao()">Salvar</button>
         <button onclick="fecharModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE EXCLUSÃO -->
+  <div id="modalExcluir" class="modal hidden">
+    <div class="modal-content">
+      <h3>Excluir hábito</h3>
+      <p>Tem certeza que deseja excluir este hábito?</p>
+
+      <div class="modal-buttons">
+        <button class="btn-excluir" onclick="confirmarExclusao()">Excluir</button>
+        <button onclick="fecharModalExcluir()">Cancelar</button>
       </div>
     </div>
   </div>

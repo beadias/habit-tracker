@@ -209,6 +209,11 @@
     gap: 10px;
     justify-content: center;
   }
+
+  #modalExcluir .modal-content p {
+    margin-bottom: 20px;
+    color: #6b7280;
+  }
   
   @media (max-width: 700px) {
     .card {
@@ -240,7 +245,7 @@
     .acoes button {
       flex: 1;
     }
-    
+
   }
   .btn-concluir {
     background: #34d399;
@@ -259,4 +264,381 @@
     margin-top: 6px;
     color: #10b981;
     font-weight: bold;
+  }
+
+  .dias-checkbox {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
+  .dias-checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  
+    background: #f3e8ff;
+    padding: 8px 12px;
+    border-radius: 10px;
+  
+    cursor: pointer;
+  }
+
+  .meta {
+    margin-top: 10px;
+    color: #6b21a8;
+    font-weight: bold;
+  }
+  
+  .progresso-texto {
+    margin-top: 8px;
+    color: #6b7280;
+  }
+  
+  .barra-progresso {
+    width: 100%;
+    max-width: 300px;
+    height: 12px;
+    background: #ede9fe;
+    border-radius: 999px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  
+  .progresso {
+    height: 100%;
+    background: #a78bfa;
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+  
+  .porcentagem {
+    margin-top: 8px;
+    color: #5b21b6;
+    font-weight: bold;
+  }
+  
+  .dias-semana-card {
+    margin-top: 10px;
+    color: #6b21a8;
+    font-weight: bold;
+    background: #f3e8ff;
+    padding: 8px 12px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+
+  .abas {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    justify-content: center;
+  }
+  
+  .aba {
+    background: #ede9fe;
+    color: #5b21b6;
+  }
+  
+  .aba.ativa {
+    background: #a78bfa;
+    color: white;
+  }
+  
+  .historico-item {
+    background: #faf5ff;
+    border-left: 6px solid #a78bfa;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+  
+  .historico-item strong {
+    display: block;
+    color: #4c1d95;
+    margin-bottom: 6px;
+  }
+  
+  .historico-item span {
+    color: #6b7280;
+  }
+
+  /* AJUSTES DA SEGUNDA TELA */
+
+#sistema {
+    max-width: 950px;
+  }
+  
+  #sistema .card {
+    padding: 28px 36px;
+    margin-bottom: 20px;
+  }
+  
+  #sistema .topo {
+    min-height: auto;
+    align-items: center;
+  }
+  
+  #boasVindas {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+  
+  .info-direita {
+    font-size: 18px;
+  }
+  
+  /* Abas menores e mais elegantes */
+  .abas {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 0 auto 24px auto;
+  }
+  
+  .aba {
+    width: 260px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    font-size: 18px;
+  }
+  
+  /* Formulário mais compacto */
+  #abaRegistro .card:first-child {
+    padding: 34px 30px;
+  }
+  
+  #formHabito {
+    max-width: 520px;
+    margin: 0 auto;
+    gap: 14px;
+  }
+  
+  #formHabito input,
+  #formHabito select {
+    max-width: 520px;
+  }
+  
+  #formHabito button {
+    margin-top: 10px;
+  }
+  
+  /* Lista mais próxima do formulário */
+  #listaHabitos {
+    margin-top: 16px;
+  }
+
+  /* CARD DOS HÁBITOS */
+
+.habito {
+    background: #ffffff;
+    border: 2px solid #ede9fe;
+  
+    border-radius: 24px;
+  
+    padding: 24px;
+  
+    margin-top: 20px;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  
+    transition: 0.3s ease;
+  
+    box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+  }
+  
+  .habito:hover {
+    transform: translateY(-4px);
+  
+    border-color: #c4b5fd;
+  
+    box-shadow: 0 10px 24px rgba(167,139,250,0.15);
+  }
+  
+  /* LADO ESQUERDO */
+  
+  .habito strong {
+    display: block;
+  
+    font-size: 24px;
+  
+    color: #5b21b6;
+  
+    margin-bottom: 10px;
+  }
+  
+  .habito span {
+    display: block;
+  
+    color: #6b7280;
+  
+    margin-bottom: 6px;
+  }
+  
+  /* BADGE */
+  
+  .meta {
+    display: inline-block;
+  
+    background: #f3e8ff;
+  
+    color: #6b21a8;
+  
+    padding: 8px 14px;
+  
+    border-radius: 999px;
+  
+    font-size: 14px;
+  
+    margin-top: 12px;
+  }
+  
+  /* PROGRESSO */
+  
+  .progresso-texto {
+    margin-top: 14px;
+  
+    font-weight: 600;
+  
+    color: #4b5563;
+  }
+  
+  .barra-progresso {
+    width: 100%;
+    max-width: 320px;
+  
+    height: 14px;
+  
+    background: #ede9fe;
+  
+    border-radius: 999px;
+  
+    overflow: hidden;
+  
+    margin-top: 10px;
+  }
+  
+  .progresso {
+    height: 100%;
+  
+    background: linear-gradient(
+      90deg,
+      #8b5cf6,
+      #a78bfa
+    );
+  
+    border-radius: 999px;
+  
+    transition: width 0.4s ease;
+  }
+  
+  .porcentagem {
+    margin-top: 10px;
+  
+    font-weight: bold;
+  
+    color: #6d28d9;
+  }
+  
+  /* STATUS */
+  
+  .status-concluido {
+    margin-top: 14px;
+  
+    color: #16a34a;
+  
+    font-weight: bold;
+  }
+  
+  /* BOTÕES */
+  
+  .acoes {
+    display: flex;
+    flex-direction: column;
+  
+    gap: 12px;
+  }
+  
+  .acoes button {
+    min-width: 130px;
+  }
+  
+  /* SEMANAL */
+  
+  .dias-semana-card {
+    margin-top: 14px;
+  
+    display: inline-block;
+  
+    background: #ede9fe;
+  
+    color: #6d28d9;
+  
+    padding: 10px 16px;
+  
+    border-radius: 999px;
+  
+    font-weight: 600;
+  }
+
+  /* ABA HISTÓRICO */
+
+.resumo-historico {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  
+  .card-resumo {
+    background: #f3e8ff;
+    border: 2px solid #ddd6fe;
+    border-radius: 20px;
+    padding: 24px;
+    min-width: 180px;
+    text-align: center;
+  }
+  
+  .card-resumo h3 {
+    color: #6b21a8;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  
+  .card-resumo p {
+    color: #5b21b6;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .titulo-registros {
+    margin-bottom: 18px;
+    color: #5b21b6;
+    text-align: center;
+  }
+  
+  .historico-item {
+    background: #faf5ff;
+    border-left: 6px solid #a78bfa;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 14px;
+    text-align: left;
+  }
+  
+  .historico-item strong {
+    display: block;
+    color: #4c1d95;
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  
+  .historico-item span {
+    color: #6b7280;
   }

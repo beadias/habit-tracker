@@ -5,6 +5,28 @@ const listaHabitos = document.getElementById('listaHabitos');
 
 let habitoAtualId = null;
 
+const frequenciaSelect = document.getElementById('frequencia');
+
+const opcoesDiario = document.getElementById('opcoesDiario');
+const opcoesSemanal = document.getElementById('opcoesSemanal');
+
+frequenciaSelect.addEventListener('change', () => {
+
+    const valor = frequenciaSelect.value;
+  
+    opcoesDiario.classList.add('hidden');
+    opcoesSemanal.classList.add('hidden');
+  
+    if (valor === 'Diário') {
+      opcoesDiario.classList.remove('hidden');
+    }
+  
+    if (valor === 'Semanal') {
+      opcoesSemanal.classList.remove('hidden');
+    }
+  
+  });
+
 // Tela inicial
 function iniciarSistema() {
   const nome = document.getElementById('nomeUsuario').value;
@@ -46,27 +68,90 @@ async function listarHabitos() {
     const item = document.createElement('div');
     item.classList.add('habito');
 
+    const porcentagem = habito.meta_diaria
+  ? Math.round((habito.progresso_atual / habito.meta_diaria) * 100)
+  : 0;
+
     item.innerHTML = `
+
   <div>
+
     <strong class="${habito.concluido ? 'concluido' : ''}">
       ${habito.nome}
     </strong>
+
     <span>Frequência: ${habito.frequencia}</span>
-    ${habito.concluido ? '<p class="status-concluido">Concluído</p>' : ''}
+
+    ${
+      habito.frequencia === 'Diário'
+      ? `
+        <p class="meta">
+          Meta diária: ${habito.meta_diaria}x
+        </p>
+
+        <p class="progresso-texto">
+          Hoje: ${habito.progresso_atual}/${habito.meta_diaria}
+        </p>
+
+        <div class="barra-progresso">
+          <div 
+            class="progresso"
+            style="width: ${porcentagem}%"
+          ></div>
+        </div>
+
+        <p class="porcentagem">
+          ${porcentagem}% concluído
+        </p>
+      `
+      : ''
+    }
+
+    ${
+      habito.frequencia === 'Semanal'
+      ? `
+        <p class="dias-semana-card">
+          ${habito.dias_semana.join(' • ')}
+        </p>
+      `
+      : ''
+    }
+
+    ${
+      habito.concluido
+      ? '<p class="status-concluido">Concluído ✅</p>'
+      : ''
+    }
+
   </div>
 
   <div class="acoes">
-    <button class="btn-concluir" onclick="concluirHabito(${habito.id})">
-      Concluir
+
+    <button 
+      class="btn-concluir"
+      onclick="concluirHabito(${habito.id})"
+    >
+      Registrar
     </button>
 
-    <button class="btn-editar" onclick="abrirModal(${habito.id}, '${habito.nome}', '${habito.frequencia}')">
+    <button 
+      class="btn-editar"
+      onclick="abrirModal(
+        ${habito.id},
+        '${habito.nome}',
+        '${habito.frequencia}'
+      )"
+    >
       Editar
     </button>
 
-    <button class="btn-excluir" onclick="excluirHabito(${habito.id})">
+    <button 
+      class="btn-excluir"
+      onclick="excluirHabito(${habito.id})"
+    >
       Excluir
     </button>
+
   </div>
 `;
 
@@ -80,6 +165,24 @@ form.addEventListener('submit', async (event) => {
   
     const nome = document.getElementById('nome').value.trim();
     const frequencia = document.getElementById('frequencia').value;
+  
+    let meta_diaria = null;
+    let dias_semana = [];
+  
+    if (frequencia === 'Diário') {
+      meta_diaria = document.getElementById('metaDiaria').value;
+    }
+  
+    if (frequencia === 'Semanal') {
+  
+      const checkboxes = document.querySelectorAll(
+        '.dias-checkbox input:checked'
+      );
+  
+      dias_semana = Array.from(checkboxes).map(
+        checkbox => checkbox.value
+      );
+    }
   
     const resposta = await fetch(API_URL);
     const habitos = await resposta.json();
@@ -95,13 +198,24 @@ form.addEventListener('submit', async (event) => {
   
     await fetch(API_URL, {
       method: 'POST',
+  
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ nome, frequencia })
+  
+      body: JSON.stringify({
+        nome,
+        frequencia,
+        meta_diaria,
+        dias_semana
+      })
     });
   
     form.reset();
+  
+    opcoesDiario.classList.add('hidden');
+    opcoesSemanal.classList.add('hidden');
+  
     listarHabitos();
   });
 
@@ -143,23 +257,113 @@ async function salvarEdicao() {
   }
   
 // Excluir hábito
-async function excluirHabito(id) {
-  const confirmar = confirm('Deseja excluir este hábito?');
+let habitoParaExcluirId = null;
 
-  if (!confirmar) return;
+function excluirHabito(id) {
+  habitoParaExcluirId = id;
+  document.getElementById('modalExcluir').classList.remove('hidden');
+}
 
-  await fetch(`${API_URL}/${id}`, {
+function fecharModalExcluir() {
+  document.getElementById('modalExcluir').classList.add('hidden');
+  habitoParaExcluirId = null;
+}
+
+async function confirmarExclusao() {
+  if (!habitoParaExcluirId) return;
+
+  await fetch(`${API_URL}/${habitoParaExcluirId}`, {
     method: 'DELETE'
   });
 
+  fecharModalExcluir();
   listarHabitos();
 }
 
 // Marcar hábito como concluido
 async function concluirHabito(id) {
-    await fetch(`${API_URL}/${id}/concluir`, {
+    await fetch(`${API_URL}/${id}/progresso`, {
       method: 'PATCH'
     });
   
     listarHabitos();
+  }
+
+  // Página de histórico
+  function mostrarAba(aba) {
+    document.getElementById('abaRegistro').classList.add('hidden');
+    document.getElementById('abaHistorico').classList.add('hidden');
+  
+    document.querySelectorAll('.aba').forEach(botao => {
+      botao.classList.remove('ativa');
+    });
+  
+    if (aba === 'registro') {
+      document.getElementById('abaRegistro').classList.remove('hidden');
+      document.querySelectorAll('.aba')[0].classList.add('ativa');
+    }
+  
+    if (aba === 'historico') {
+      document.getElementById('abaHistorico').classList.remove('hidden');
+      document.querySelectorAll('.aba')[1].classList.add('ativa');
+      carregarHistorico();
+    }
+  }
+  
+  async function carregarHistorico() {
+
+    const resposta = await fetch('http://localhost:3000/historico');
+  
+    const historico = await resposta.json();
+  
+    const listaHistorico = document.getElementById('listaHistorico');
+  
+    listaHistorico.innerHTML = '';
+  
+    listaHistorico.innerHTML += `
+  
+      <div class="resumo-historico">
+  
+        <div class="card-resumo">
+          <h3>Hoje</h3>
+          <p>${historico.totalHoje}</p>
+        </div>
+  
+        <div class="card-resumo">
+          <h3>Últimos 7 dias</h3>
+          <p>${historico.totalSemana}</p>
+        </div>
+  
+      </div>
+  
+    `;
+  
+    listaHistorico.innerHTML += `
+      <h3 class="titulo-registros">
+        Últimos registros
+      </h3>
+    `;
+  
+    historico.registros.forEach((registro) => {
+  
+      const data = new Date(
+        registro.data_conclusao
+      ).toLocaleDateString('pt-BR');
+  
+      const item = document.createElement('div');
+  
+      item.classList.add('historico-item');
+  
+      item.innerHTML = `
+        <strong>${registro.nome}</strong>
+  
+        <span>
+          Registrado em: ${data}
+        </span>
+      `;
+  
+      listaHistorico.appendChild(item);
+  
+    });
+  
   }
